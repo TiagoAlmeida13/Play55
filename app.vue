@@ -2,11 +2,7 @@
 import { ref, onBeforeMount } from 'vue'
 import { useNuxtApp } from '#app'
 import { onAuthStateChanged } from 'firebase/auth'
-
-// stores
 import { useUserStore } from '~/stores/useUserStore'
-
-// composables
 import { useAuth } from '~/composables/useAuth'
 
 const loading = ref(true)
@@ -26,12 +22,11 @@ onBeforeMount(() => {
       })
     } else {
       console.log('Nenhum usuário autenticado')
-      reset() // ✅ já chama userStore.clearUser()
+      reset() 
     }
     loading.value = false
   })
 
-  // opcional: retorna unsub para possíveis usos futuros
   return unsub
 })
 </script>
