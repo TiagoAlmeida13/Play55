@@ -14,6 +14,7 @@ export const useAuth = () => {
             const provider = new GoogleAuthProvider()
             const result = await signInWithPopup(auth, provider)
             const user = result.user
+
             userStore.setUser({
                 uid: user.uid,
                 name: user.displayName || '',
@@ -28,16 +29,24 @@ export const useAuth = () => {
 
     // Logout
     const logout = async () => {
-        await signOut(auth)
-        userStore.clearUser()
+        try {
+            await signOut(auth)
+        } catch (error) {
+            console.error('Erro ao fazer logout:', error)
+        } finally {
+            userStore.clearUser()
+        }
     }
 
-    // Novo: Define o UID manualmente (usado em app.vue)
+    // Define o UID manualmente
     const setUserId = (uid: string) => {
-        userStore.setUser({ uid })
+        userStore.setUser({
+            ...(userStore.user || { name: '', email: '' }),
+            uid
+        })
     }
 
-    // Novo: Reseta o estado do usuário
+    // Reseta os dados do usuário
     const reset = () => {
         userStore.clearUser()
     }
@@ -46,7 +55,7 @@ export const useAuth = () => {
         loginWithGoogle,
         logout,
         isLoading,
-        isAuthenticated: computed(() => !!userStore.user),
+        isAuthenticated: computed(() => userStore.isAuthenticated),
         user: computed(() => userStore.user),
         setUserId,
         reset

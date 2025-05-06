@@ -17,15 +17,21 @@ const { setUserId, reset } = useAuth()
 onBeforeMount(() => {
   const unsub = onAuthStateChanged(nuxtApp.$auth, (user) => {
     if (user) {
+      console.log('Usuário autenticado:', user)
       setUserId(user.uid)
-      userStore.updateLoginStatus(true)
+      userStore.setUser({
+        uid: user.uid,
+        name: user.displayName || '',
+        email: user.email || ''
+      })
     } else {
-      reset()
-      userStore.updateLoginStatus(false)
+      console.log('Nenhum usuário autenticado')
+      reset() // ✅ já chama userStore.clearUser()
     }
     loading.value = false
   })
 
+  // opcional: retorna unsub para possíveis usos futuros
   return unsub
 })
 </script>
@@ -37,6 +43,8 @@ onBeforeMount(() => {
         <NuxtPage />
       </NuxtLayout>
     </div>
-    <div v-else>Loading...</div>
+    <div v-else>
+      <p>Carregando...</p>
+    </div>
   </div>
 </template>

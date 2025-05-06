@@ -1,6 +1,10 @@
 export default defineNuxtConfig({
   ssr: false,
-  modules: ['@pinia/nuxt'],
+  vite: {
+    optimizeDeps: {
+      include: ['pinia']
+    }
+  },
   runtimeConfig: {
     public: {
       FB_API_KEY: process.env.NUXT_PUBLIC_FB_API_KEY,

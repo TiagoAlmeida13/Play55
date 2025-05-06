@@ -2,7 +2,7 @@
 import { LoginGoogle } from "#components";
 
 //store
-import { useTabStore } from "~/stores/useTab";
+import { useTabStore } from '~/stores/useTabStore';
 
 const tabStore = useTabStore();
 

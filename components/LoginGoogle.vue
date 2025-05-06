@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
 
 const auth = getAuth();
 const router = useRouter();

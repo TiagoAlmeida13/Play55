@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LoginGoogle, ContactModal } from "#components"
-import { useTabStore } from "~/stores/tabStore"
+import { useTabStore } from '~/stores/useTabStore';
 import { ref } from 'vue'
 
 const tabStore = useTabStore()
